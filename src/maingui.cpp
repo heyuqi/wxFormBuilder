@@ -68,6 +68,9 @@ void LogStack();
 static const wxCmdLineEntryDesc s_cmdLineDesc[] = {
 	{ wxCMD_LINE_SWITCH, "g", "generate", "Generate code from passed file.", wxCMD_LINE_VAL_STRING,
 	  0 },
+	{ wxCMD_LINE_OPTION, "o", "output_path", "Override the path property from the passed file." },
+	{ wxCMD_LINE_OPTION, "f", "filename", "Override the file property from the passed file." },
+	{ wxCMD_LINE_OPTION, "e", "embedded_path", "Override the path to generated files for embedded files." },
 	{ wxCMD_LINE_OPTION, "l", "language",
 	  "Override the code_generation property from the passed file and generate the passed "
 	  "languages. Separate multiple languages with commas.",
@@ -134,8 +137,11 @@ int MyApp::OnRun()
 	}
 
 	bool justGenerate = false;
-	wxString language;
+	wxString language, output_path, filename, embedded_path;
 	bool hasLanguage = parser.Found( wxT("l"), &language );
+	bool hasOutputPath = parser.Found( wxT("o"), &output_path );
+	bool hasEmbeddedPath = parser.Found( wxT("e"), &embedded_path );
+	bool hasFilename = parser.Found( wxT("f"), &filename );
 	if ( parser.Found( wxT("g") ) )
 	{
 		if ( projectToLoad.empty() )
@@ -288,6 +294,37 @@ int MyApp::OnRun()
 						codeGen->SetValue( language );
 					}
 				}
+
+				if ( hasOutputPath )
+				{
+					PObjectBase project = AppData()->GetProjectData();
+					PProperty outputPath = project->GetProperty( _("path") );
+					if ( outputPath )
+					{
+						outputPath->SetValue( output_path );
+					}
+				}
+
+				if ( hasEmbeddedPath )
+				{
+					PObjectBase project = AppData()->GetProjectData();
+					PProperty embeddedPath = project->GetProperty( _("embedded_files_path") );
+					if ( embeddedPath )
+					{
+						embeddedPath->SetValue( embedded_path );
+					}
+				}
+
+				if ( hasFilename )
+				{
+					PObjectBase project = AppData()->GetProjectData();
+					PProperty prop = project->GetProperty( _("file") );
+					if ( prop )
+					{
+						prop->SetValue( filename );
+					}
+				}
+
 				AppData()->GenerateCode( false, true );
 				return 0;
 			}
