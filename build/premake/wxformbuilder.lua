@@ -29,10 +29,18 @@ project "wxFormBuilder"
     links                   {"TiCPP", "plugin-interface"}
 
     local libs = ""
-	if wxUseMediaCtrl then
-		libs	= "std,stc,richtext,propgrid,aui,ribbon,media"
+	if wxCompiler == "vc" then
+		if wxUseMediaCtrl then
+			libs	= "core,adv,html,xrc,stc,richtext,propgrid,aui,ribbon,media"
+		else
+			libs	= "core,adv,html,xrc,stc,richtext,propgrid,aui,ribbon"
+		end
 	else
-		libs	= "std,stc,richtext,propgrid,aui,ribbon"
+		if wxUseMediaCtrl then
+			libs	= "std,stc,richtext,propgrid,aui,ribbon,media"
+		else
+			libs	= "std,stc,richtext,propgrid,aui,ribbon"
+		end
 	end
 
 	if wxArchitecture then

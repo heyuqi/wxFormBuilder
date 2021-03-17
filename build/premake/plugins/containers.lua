@@ -18,7 +18,11 @@ project "containers-components-plugin"
     defines             {"BUILD_DLL", "TIXML_USE_TICPP"}
     links               {"plugin-interface", "TiCPP"}
 
-    local libs = "std,richtext,propgrid,stc,ribbon,aui"
+    if wxCompiler == "vc" then
+        libs = "core,richtext,propgrid,stc,ribbon,aui"
+    else
+        libs = "std,richtext,propgrid,stc,ribbon,aui"
+    end
 
 	if wxArchitecture then
 		buildoptions	{"-arch " .. wxArchitecture}

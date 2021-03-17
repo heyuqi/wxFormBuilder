@@ -57,7 +57,7 @@ wxVersion         = _OPTIONS["wx-version"]
 wxUnicodeSign     = "u"
 wxUseMediaCtrl    = true
 wxUseUnicode      = true
-wxMonolithic      = true
+wxMonolithic      = not (wxCompiler == "vc")
 
 if not wxCompiler then wxCompiler = "gcc" end
 wxCompilerName = wxCompiler
