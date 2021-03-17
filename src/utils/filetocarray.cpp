@@ -140,7 +140,7 @@ wxString FileToCArray::Generate( const wxString& sourcePath )
 	arrayCodeWriter->WriteLn( wxT("};") );
 	arrayCodeWriter->WriteLn();
 
-	arrayCodeWriter->WriteLn( wxT("wxBitmap& ") + arrayName + wxT("_to_wx_bitmap()") );
+	arrayCodeWriter->WriteLn( wxT("static wxBitmap& ") + arrayName + wxT("_to_wx_bitmap()") );
 	arrayCodeWriter->WriteLn( wxT("{") );
 	arrayCodeWriter->Indent();
 	arrayCodeWriter->WriteLn( wxT("static wxMemoryInputStream memIStream( ") + arrayName + wxT(", sizeof( ") + arrayName + wxT(" ) );") );
