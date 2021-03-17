@@ -29,7 +29,7 @@ Written by
 
   <objectinfo class="sizeritembase" smallIcon="sizer.xpm" type="interface">
     <property name="border" type="uint" 		help="Determines the border width, if the flag parameter is set to include any border flag.">
-		5
+		3
     </property>
     <property name="flag" type="bitlist">
       <option name="wxALL" 						help="Enable all borders"		/>
